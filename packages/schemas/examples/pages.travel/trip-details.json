@@ -1,0 +1,65 @@
+{
+  "id": "trip-details",
+  "name": "Trip Details Page",
+  "description": "Collect trip information",
+  "layout": {
+    "type": "single-column"
+  },
+  "fields": [
+    {
+      "id": "destination",
+      "type": "text",
+      "label": "Destination Country",
+      "placeholder": "Enter destination country",
+      "required": true,
+      "helpText": "Enter the primary country you'll be visiting"
+    },
+    {
+      "id": "departureDate",
+      "type": "date",
+      "label": "Departure Date",
+      "required": true
+    },
+    {
+      "id": "returnDate",
+      "type": "date",
+      "label": "Return Date",
+      "required": true
+    },
+    {
+      "id": "tripPurpose",
+      "type": "select",
+      "label": "Trip Purpose",
+      "required": true,
+      "options": [
+        { "value": "leisure", "label": "Leisure" },
+        { "value": "business", "label": "Business" },
+        { "value": "adventure", "label": "Adventure Sports" }
+      ]
+    },
+    {
+      "id": "adventureActivities",
+      "type": "textarea",
+      "label": "Adventure Activities",
+      "placeholder": "List the adventure activities you plan to do",
+      "rows": 3,
+      "conditions": [
+        {
+          "field": "tripPurpose",
+          "operator": "eq",
+          "value": "adventure"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "mode": "onBlur",
+    "rules": [
+      {
+        "type": "crossField",
+        "fields": ["departureDate", "returnDate"],
+        "message": "Return date must be after departure date"
+      }
+    ]
+  }
+}

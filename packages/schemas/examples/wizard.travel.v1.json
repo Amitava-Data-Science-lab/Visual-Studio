@@ -1,0 +1,133 @@
+{
+  "name": "Travel Insurance Quote",
+  "description": "Get a quote for travel insurance coverage",
+  "version": "v1",
+  "steps": [
+    {
+      "id": "trip-details",
+      "title": "Trip Details",
+      "description": "Tell us about your trip",
+      "fields": [
+        {
+          "id": "destination",
+          "type": "text",
+          "label": "Destination Country",
+          "placeholder": "Enter destination country",
+          "required": true
+        },
+        {
+          "id": "departureDate",
+          "type": "date",
+          "label": "Departure Date",
+          "required": true
+        },
+        {
+          "id": "returnDate",
+          "type": "date",
+          "label": "Return Date",
+          "required": true
+        },
+        {
+          "id": "tripPurpose",
+          "type": "select",
+          "label": "Trip Purpose",
+          "required": true,
+          "options": [
+            { "value": "leisure", "label": "Leisure" },
+            { "value": "business", "label": "Business" },
+            { "value": "adventure", "label": "Adventure Sports" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "traveler-info",
+      "title": "Traveler Information",
+      "description": "Enter traveler details",
+      "fields": [
+        {
+          "id": "firstName",
+          "type": "text",
+          "label": "First Name",
+          "required": true
+        },
+        {
+          "id": "lastName",
+          "type": "text",
+          "label": "Last Name",
+          "required": true
+        },
+        {
+          "id": "email",
+          "type": "email",
+          "label": "Email Address",
+          "required": true
+        },
+        {
+          "id": "dateOfBirth",
+          "type": "date",
+          "label": "Date of Birth",
+          "required": true
+        },
+        {
+          "id": "preExistingConditions",
+          "type": "checkbox",
+          "label": "I have pre-existing medical conditions"
+        }
+      ]
+    },
+    {
+      "id": "coverage-options",
+      "title": "Coverage Options",
+      "description": "Select your coverage level",
+      "fields": [
+        {
+          "id": "coverageLevel",
+          "type": "select",
+          "label": "Coverage Level",
+          "required": true,
+          "options": [
+            { "value": "basic", "label": "Basic - $50,000" },
+            { "value": "standard", "label": "Standard - $100,000" },
+            { "value": "premium", "label": "Premium - $250,000" }
+          ]
+        },
+        {
+          "id": "cancelProtection",
+          "type": "checkbox",
+          "label": "Trip Cancellation Protection"
+        },
+        {
+          "id": "baggageProtection",
+          "type": "checkbox",
+          "label": "Baggage Loss Protection"
+        }
+      ],
+      "hooks": {
+        "onLeave": {
+          "type": "api",
+          "endpoint": "/api/embedded/sessions/{sessionId}/quote",
+          "method": "POST"
+        }
+      }
+    },
+    {
+      "id": "review",
+      "title": "Review & Confirm",
+      "description": "Review your quote and purchase",
+      "fields": []
+    }
+  ],
+  "settings": {
+    "allowBack": true,
+    "showProgress": true,
+    "showStepNumbers": true
+  },
+  "hooks": {
+    "onComplete": {
+      "type": "api",
+      "endpoint": "/api/embedded/sessions/{sessionId}/issue",
+      "method": "POST"
+    }
+  }
+}

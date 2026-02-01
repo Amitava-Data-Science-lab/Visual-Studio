@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vsb.example.com/schemas/condition.v1.schema.json",
+  "title": "Condition Definition",
+  "description": "Schema for conditional logic in Visual Studio Builder",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/simpleCondition"
+    },
+    {
+      "$ref": "#/$defs/compoundCondition"
+    }
+  ],
+  "$defs": {
+    "simpleCondition": {
+      "type": "object",
+      "required": ["field", "operator", "value"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field path using dot notation (e.g., 'step1.firstName')"
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "eq",
+            "neq",
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "contains",
+            "notContains",
+            "startsWith",
+            "endsWith",
+            "in",
+            "notIn",
+            "empty",
+            "notEmpty",
+            "matches"
+          ],
+          "description": "Comparison operator"
+        },
+        "value": {
+          "description": "Value to compare against (can be literal or field reference)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "compoundCondition": {
+      "type": "object",
+      "required": ["logic", "conditions"],
+      "properties": {
+        "logic": {
+          "type": "string",
+          "enum": ["and", "or"],
+          "description": "Logical operator to combine conditions"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/simpleCondition"
+              },
+              {
+                "$ref": "#/$defs/compoundCondition"
+              }
+            ]
+          },
+          "minItems": 1,
+          "description": "Array of conditions to combine"
+        }
+      },
+      "additionalProperties": false
+    },
+    "operators": {
+      "description": "Available comparison operators",
+      "type": "string",
+      "enum": [
+        "eq",
+        "neq",
+        "gt",
+        "gte",
+        "lt",
+        "lte",
+        "contains",
+        "notContains",
+        "startsWith",
+        "endsWith",
+        "in",
+        "notIn",
+        "empty",
+        "notEmpty",
+        "matches"
+      ]
+    }
+  }
+}

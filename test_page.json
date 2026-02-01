@@ -1,0 +1,1 @@
+{"page_key": "page.travel.selectPlan", "definition": {"type": "form", "fields": [{"name": "planType", "type": "select", "options": ["basic", "premium", "platinum"]}]}, "created_by": "test-user"}

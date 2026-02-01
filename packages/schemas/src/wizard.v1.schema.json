@@ -1,0 +1,239 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vsb.example.com/schemas/wizard.v1.schema.json",
+  "title": "Wizard Definition",
+  "description": "Schema for wizard definitions in Visual Studio Builder",
+  "type": "object",
+  "required": ["steps"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Display name of the wizard"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the wizard"
+    },
+    "version": {
+      "type": "string",
+      "description": "Schema version"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Array of wizard steps",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/step"
+      }
+    },
+    "hooks": {
+      "type": "object",
+      "description": "Lifecycle hooks",
+      "properties": {
+        "onStart": {
+          "$ref": "#/$defs/hook"
+        },
+        "onComplete": {
+          "$ref": "#/$defs/hook"
+        },
+        "onStepChange": {
+          "$ref": "#/$defs/hook"
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Wizard settings",
+      "properties": {
+        "allowBack": {
+          "type": "boolean",
+          "default": true
+        },
+        "showProgress": {
+          "type": "boolean",
+          "default": true
+        },
+        "showStepNumbers": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique step identifier"
+        },
+        "title": {
+          "type": "string",
+          "description": "Step title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Step description"
+        },
+        "pageRef": {
+          "type": "string",
+          "description": "Reference to a page definition"
+        },
+        "fields": {
+          "type": "array",
+          "description": "Inline field definitions",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Conditions for showing this step",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "hooks": {
+          "type": "object",
+          "properties": {
+            "onEnter": {
+              "$ref": "#/$defs/hook"
+            },
+            "onLeave": {
+              "$ref": "#/$defs/hook"
+            },
+            "onValidate": {
+              "$ref": "#/$defs/hook"
+            }
+          }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "required": ["id", "type", "label"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique field identifier"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "email", "number", "select", "checkbox", "textarea", "date", "radio", "file"],
+          "description": "Field type"
+        },
+        "label": {
+          "type": "string",
+          "description": "Field label"
+        },
+        "placeholder": {
+          "type": "string",
+          "description": "Placeholder text"
+        },
+        "helpText": {
+          "type": "string",
+          "description": "Help text shown below the field"
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "defaultValue": {
+          "description": "Default value for the field"
+        },
+        "options": {
+          "type": "array",
+          "description": "Options for select/radio fields",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "validation": {
+          "$ref": "#/$defs/fieldValidation"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      }
+    },
+    "fieldValidation": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "minLength": {
+          "type": "integer"
+        },
+        "maxLength": {
+          "type": "integer"
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "patternMessage": {
+          "type": "string"
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "required": ["field", "operator", "value"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field path to evaluate"
+        },
+        "operator": {
+          "type": "string",
+          "enum": ["eq", "neq", "gt", "gte", "lt", "lte", "contains", "startsWith", "endsWith", "in", "notIn"],
+          "description": "Comparison operator"
+        },
+        "value": {
+          "description": "Value to compare against"
+        }
+      }
+    },
+    "hook": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["api", "compute"],
+          "description": "Hook type"
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "API endpoint for api hooks"
+        },
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH"],
+          "default": "POST"
+        },
+        "expression": {
+          "type": "string",
+          "description": "Expression for compute hooks"
+        }
+      }
+    }
+  }
+}

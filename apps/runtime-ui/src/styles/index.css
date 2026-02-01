@@ -1,0 +1,206 @@
+/* VSB Runtime UI Styles */
+
+:root {
+  --vsb-color-primary: #0066cc;
+  --vsb-color-primary-hover: #0052a3;
+  --vsb-color-secondary: #6c757d;
+  --vsb-color-success: #28a745;
+  --vsb-color-danger: #dc3545;
+  --vsb-color-background: #f8f9fa;
+  --vsb-color-surface: #ffffff;
+  --vsb-color-text: #212529;
+  --vsb-color-text-muted: #6c757d;
+  --vsb-color-border: #dee2e6;
+
+  --vsb-spacing-xs: 0.25rem;
+  --vsb-spacing-sm: 0.5rem;
+  --vsb-spacing-md: 1rem;
+  --vsb-spacing-lg: 1.5rem;
+  --vsb-spacing-xl: 2rem;
+
+  --vsb-radius-sm: 4px;
+  --vsb-radius-md: 8px;
+  --vsb-radius-lg: 12px;
+
+  --vsb-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Runtime container */
+.vsb-runtime {
+  font-family: var(--vsb-font-family);
+  color: var(--vsb-color-text);
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--vsb-spacing-lg);
+}
+
+.vsb-runtime--loading,
+.vsb-runtime--error,
+.vsb-runtime--empty {
+  text-align: center;
+  padding: var(--vsb-spacing-xl);
+}
+
+.vsb-runtime__header {
+  margin-bottom: var(--vsb-spacing-xl);
+  text-align: center;
+}
+
+.vsb-runtime__header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Spinner */
+.vsb-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--vsb-color-border);
+  border-top-color: var(--vsb-color-primary);
+  border-radius: 50%;
+  animation: vsb-spin 0.8s linear infinite;
+  margin: 0 auto var(--vsb-spacing-md);
+}
+
+@keyframes vsb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Step */
+.vsb-step {
+  background: var(--vsb-color-surface);
+  border-radius: var(--vsb-radius-md);
+  padding: var(--vsb-spacing-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.vsb-step__header {
+  margin-bottom: var(--vsb-spacing-lg);
+}
+
+.vsb-step__header h2 {
+  font-size: 1.25rem;
+  margin: 0 0 var(--vsb-spacing-xs);
+}
+
+.vsb-step__header p {
+  color: var(--vsb-color-text-muted);
+  margin: 0;
+}
+
+.vsb-step__fields {
+  margin-bottom: var(--vsb-spacing-lg);
+}
+
+.vsb-step__actions {
+  display: flex;
+  gap: var(--vsb-spacing-md);
+  justify-content: flex-end;
+}
+
+.vsb-step__progress {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--vsb-color-text-muted);
+  margin-top: var(--vsb-spacing-lg);
+}
+
+/* Fields */
+.vsb-field {
+  margin-bottom: var(--vsb-spacing-md);
+}
+
+.vsb-field label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: var(--vsb-spacing-xs);
+}
+
+.vsb-field__required {
+  color: var(--vsb-color-danger);
+  margin-left: var(--vsb-spacing-xs);
+}
+
+.vsb-field__help {
+  display: block;
+  color: var(--vsb-color-text-muted);
+  font-size: 0.875rem;
+  margin-top: var(--vsb-spacing-xs);
+}
+
+.vsb-field input[type='text'],
+.vsb-field input[type='email'],
+.vsb-field input[type='number'],
+.vsb-field input[type='date'],
+.vsb-field select,
+.vsb-field textarea {
+  width: 100%;
+  padding: var(--vsb-spacing-sm) var(--vsb-spacing-md);
+  border: 1px solid var(--vsb-color-border);
+  border-radius: var(--vsb-radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.vsb-field input:focus,
+.vsb-field select:focus,
+.vsb-field textarea:focus {
+  outline: none;
+  border-color: var(--vsb-color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.vsb-field--checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--vsb-spacing-sm);
+}
+
+.vsb-field--checkbox label {
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.vsb-field--checkbox input[type='checkbox'] {
+  width: auto;
+}
+
+/* Buttons */
+.vsb-btn {
+  padding: var(--vsb-spacing-sm) var(--vsb-spacing-lg);
+  border: none;
+  border-radius: var(--vsb-radius-sm);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.vsb-btn--primary {
+  background-color: var(--vsb-color-primary);
+  color: white;
+}
+
+.vsb-btn--primary:hover:not(:disabled) {
+  background-color: var(--vsb-color-primary-hover);
+}
+
+.vsb-btn--secondary {
+  background-color: var(--vsb-color-surface);
+  color: var(--vsb-color-text);
+  border: 1px solid var(--vsb-color-border);
+}
+
+.vsb-btn--secondary:hover:not(:disabled) {
+  background-color: var(--vsb-color-background);
+}
+
+.vsb-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

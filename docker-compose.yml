@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: vsb
+      POSTGRES_PASSWORD: vsb
+      POSTGRES_DB: vsb
+    ports:
+      - "5433:5432"  # Using 5433 to avoid conflict with local Postgres on 5432
+    volumes:
+      - vsb_pgdata:/var/lib/postgresql  # Changed for Postgres 18+ compatibility
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vsb -d vsb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vsb_pgdata:

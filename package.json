@@ -1,0 +1,25 @@
+{
+  "name": "visual-studio-builder",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "format": "prettier -w .",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "cd apps/api && alembic upgrade head",
+    "db:migrate:create": "cd apps/api && alembic revision --autogenerate -m",
+    "db:migrate:history": "cd apps/api && alembic history",
+    "db:migrate:current": "cd apps/api && alembic current",
+    "api:dev": "pnpm --filter @vsb/api dev",
+    "builder:dev": "pnpm --filter @vsb/builder-ui dev",
+    "runtime:dev": "pnpm --filter @vsb/runtime-ui dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "prettier": "^3.2.5"
+  }
+}

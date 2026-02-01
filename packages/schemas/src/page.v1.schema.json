@@ -1,0 +1,240 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://vsb.example.com/schemas/page.v1.schema.json",
+  "title": "Page Definition",
+  "description": "Schema for page definitions in Visual Studio Builder",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique page identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the page"
+    },
+    "description": {
+      "type": "string",
+      "description": "Page description"
+    },
+    "layout": {
+      "type": "object",
+      "description": "Layout configuration",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["single-column", "two-column", "grid"],
+          "default": "single-column"
+        },
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "gap": {
+          "type": "string"
+        }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "description": "Field definitions",
+      "items": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Page sections for grouping fields",
+      "items": {
+        "$ref": "#/$defs/section"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Page-level validation",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["onChange", "onBlur", "onSubmit"],
+          "default": "onBlur"
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validationRule"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "field": {
+      "type": "object",
+      "required": ["id", "type", "label"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "email", "number", "select", "checkbox", "textarea", "date", "radio", "file", "hidden"]
+        },
+        "label": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "helpText": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "readOnly": {
+          "type": "boolean",
+          "default": false
+        },
+        "defaultValue": {},
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "disabled": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "minLength": {
+          "type": "integer"
+        },
+        "maxLength": {
+          "type": "integer"
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "patternMessage": {
+          "type": "string"
+        },
+        "rows": {
+          "type": "integer",
+          "description": "Number of rows for textarea"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "type": "integer"
+            },
+            "span": {
+              "type": "integer"
+            },
+            "width": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "collapsible": {
+          "type": "boolean",
+          "default": false
+        },
+        "collapsed": {
+          "type": "boolean",
+          "default": false
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Field IDs in this section"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "required": ["field", "operator", "value"],
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string",
+          "enum": ["eq", "neq", "gt", "gte", "lt", "lte", "contains", "startsWith", "endsWith", "in", "notIn", "empty", "notEmpty"]
+        },
+        "value": {}
+      }
+    },
+    "validationRule": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["required", "custom", "crossField"]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

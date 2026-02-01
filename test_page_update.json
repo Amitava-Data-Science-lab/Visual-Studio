@@ -1,0 +1,1 @@
+{"definition": {"type": "form", "title": "Select Your Plan", "fields": [{"name": "planType", "type": "select", "label": "Plan Type", "options": ["basic", "premium", "platinum"]}, {"name": "coverage", "type": "text", "label": "Coverage Amount"}]}, "created_by": "test-user"}

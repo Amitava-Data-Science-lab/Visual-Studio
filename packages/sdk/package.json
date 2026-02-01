@@ -1,0 +1,28 @@
+{
+  "name": "@vsb/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@vsb/schemas": "workspace:*",
+    "ajv": "^8.12.0"
+  },
+  "devDependencies": {
+    "@vsb/config": "workspace:*",
+    "typescript": "^5.4.2",
+    "vitest": "^1.3.0"
+  }
+}
