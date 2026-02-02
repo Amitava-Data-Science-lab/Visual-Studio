@@ -96,7 +96,9 @@ export const useWizardStore = create<WizardState>((set, get) => ({
       const session = await runtimeApi.loadSession(sessionId);
       set({
         sessionId: session.session_id,
-        sessionState: session.state
+        sessionState: session.state,
+        currentStep: session.current_step ?? null,  // Restore step for resume
+        stepHistory: []  // Reset history on resume
       });
     } catch (err) {
       set({ error: (err as Error).message });

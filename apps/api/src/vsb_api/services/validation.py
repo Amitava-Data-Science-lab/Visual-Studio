@@ -265,11 +265,22 @@ async def validate_wizard_page_refs(
 
     # Check each page reference exists as published
     for page_ref in page_refs:
-        result = await db.execute(
-            select(PageDefinition)
-            .where(PageDefinition.page_key == page_ref)
-            .where(PageDefinition.status == "published")
+        # Parse pageRef format: "page_key@version" (e.g., "page.travel.start@v1")
+        if "@" in page_ref:
+            page_key, version = page_ref.rsplit("@", 1)
+        else:
+            # No version specified - look for any published version
+            page_key = page_ref
+            version = None
+
+        query = select(PageDefinition).where(
+            PageDefinition.page_key == page_key,
+            PageDefinition.status == "published",
         )
+        if version:
+            query = query.where(PageDefinition.version == version)
+
+        result = await db.execute(query)
         page = result.scalar_one_or_none()
 
         if not page:

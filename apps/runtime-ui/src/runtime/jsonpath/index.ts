@@ -1,5 +1,10 @@
 // Safety: Reject dangerous paths
 function validatePath(path: string): void {
+  // Enforce $ or $. prefix
+  if (path !== '$' && !path.startsWith('$.')) {
+    throw new Error('Path must start with "$" or "$." (e.g., "$.application.name")');
+  }
+
   // Reject array/wildcard syntax (not supported in v0)
   if (path.match(/[[\]()*]/)) {
     throw new Error('Array and wildcard syntax not supported in paths');
